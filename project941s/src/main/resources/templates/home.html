@@ -1,0 +1,39 @@
+<html th:replace="~{base :: flexiblelayout(~{::content})}" xmlns:th="http://www.thymeleaf.org">
+
+<content class="container-fluid">
+    <div class="text-center" style="position:relative;">
+        <img src="images/HomeImage.png" class="img-fluid rounded" alt="HomeImage">
+        <a th:align="center" style="position: absolute;top: 50%;left: 50%;transform: translate( -50%, -50% );color: white;">
+            <h2>쿠버네티스로 자동 배포를 편하게!</h2>
+            <p>941s은 쿠버네티스를 이용한 자동 배포를 쉽고 빠르게 할 수 없도록 도와드립니다.</p>
+        </a>
+    </div>
+
+    <div th:align="center">
+        <div class="row">
+            <div class="col-lg my-5">
+                <img src="images/home_easySetting.png" class="img-fluid rounded" alt="home_easySetting">
+                <h3>간편한 설정</h3>
+                <p>쉽게 할 수 있는 쿠버네티스 설정</p>
+            </div>
+            <div class="col-lg my-5">
+                <img src="images/home_autoScalling.png" class="img-fluid rounded" alt="home_autoScalling">
+                <h3>자동 스케일링</h3>
+                <p>자동 스케일링을 통한 높은 서비스 안정성</p>
+            </div>
+            <div class="col-lg my-5">
+                <img src="images/home_CD.png" class="img-fluid rounded" alt="home_CD">
+                <h3>지속적인 배포</h3>
+                <p>지속적인 배포를 통한 빠른 서비스 업데이트</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card text-center text-bg-primary" style="height: 10rem;">
+        <div class="row card-body">
+            <div class="align-self-center">
+                <a href="#" class="btn btn-lg btn-light btn-outline-primary">로그인</a>
+            </div>
+        </div>
+    </div>
+</content>

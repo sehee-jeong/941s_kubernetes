@@ -1,0 +1,5 @@
+<html th:replace="~{base :: flexiblelayout(~{::content})}" th:fragment="flexiblelayout(contentBody, title)" xmlns:th="http://www.thymeleaf.org">
+<content class="container-fluid bg-white">
+    <div th:replace="~{fragments/contentHeader :: contentHeader(${title})}" />
+    <div th:replace="${contentBody}" />
+</content>

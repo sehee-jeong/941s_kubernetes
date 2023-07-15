@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<contentHeader th:fragment="contentHeader(title)">
+    <div class="m-4 border-bottom" id="content-header">
+        <div class="h2 mb-2 text-start fw-bolder" th:include="${title}"></div>
+    </div>
+</contentHeader>

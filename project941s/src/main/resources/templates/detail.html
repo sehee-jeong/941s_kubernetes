@@ -1,0 +1,75 @@
+<html th:replace="~{contentBase :: flexiblelayout(~{::contentBody}, ~{::title})}" xmlns:th="http://www.thymeleaf.org">
+
+
+<title class="bg-light">
+    서비스:<span th:text="${name}"></span>
+</title>
+
+<contentBody class="container-fluid">
+    <div class="row px-3">
+        <!--  요청수, 버전, url container -->
+        <div class="col-4">
+            <div class="row text-center">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">요청수</div>
+                        <div class="card-body" th:text="${callCount}"></div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">버전</div>
+                        <div class="card-body" th:text="${version}"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body" th:text="${url}"></div>
+            </div>
+        </div>
+
+        <!-- 요청 수 그래프 컴포넌트 -->
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">일별 요청 수</div>
+                <div class="card-body">그래프</div>
+            </div>
+        </div>
+
+        <!-- 서비스 콘솔 컴포넌트 -->
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">서비스 콘솔</div>
+                <ul class="list-group list-group-flush" th:each="s : ${services}">
+                    <li class="list-group-item" th:text="${s}"></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 수정내역 컴포넌트 -->
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">수정 내역</div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">유형</th>
+                        <th scope="col">버전</th>
+                        <th scope="col">코멘트</th>
+                        <th scope="col">수정일자</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="fix : ${fixes}">
+                        <th scope="row" th:text="${fix.type}"></th>
+                        <td th:text="${fix.version}"></td>
+                        <td th:text="${fix.comments}"></td>
+                        <td th:text="${fix.date}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</contentBody>

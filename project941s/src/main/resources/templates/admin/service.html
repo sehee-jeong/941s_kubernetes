@@ -1,0 +1,46 @@
+<html th:replace="~{contentBase :: flexiblelayout(~{::contentBody}, ~{::title})}" xmlns:th="http://www.thymeleaf.org">
+
+
+<title class="bg-light">
+    Services <span th:text="${user}"></span>
+</title>
+
+<contentBody class="container-fluid">
+    <form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbos" value="" id
+                        </div>
+                    </th>
+                    <th scope="col">서비스 명</th>
+                    <th scope="col">상태</th>
+                    <th scope="col">버전</th>
+                    <th scope="col">Git Hub 주소</th>
+                    <th scope="col">개방 포트</th>
+                    <th scope="col">최종 수정일</th>
+                    <th scope="col">control</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="service : ${services}">
+                    <th scope="row">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbos" value="" id
+                        </div>
+                    </th>
+                    <td th:each="${service.name}">서비스명</td>
+                    <td th:each="${service.state}">상태</td>
+                    <td th:each="${service.version}">버전</td>
+                    <td th:each="${service.githubUrl}">github주소</td>
+                    <td th:each="${service.port}">개방 포트</td>
+                    <td th:each="${service.latestDate}">최종 수정일</td>
+                    <td>control</td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Delete</button>
+    </form>
+</contentBody>

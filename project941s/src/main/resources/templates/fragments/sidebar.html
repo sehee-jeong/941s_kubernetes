@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="sidebar" id="sidebar" th:fragment="sidebar">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Side Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">
+                        <img src="/images/homeIcon.png" alt="">
+                        <span>Overview</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <img class="icon" src="/images/serviceIcon.png" width="20" height="18">
+                        <span>Service</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <span class="spliter">
+                        Account
+                    </span>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <img class="icon" src="/images/loginIcon.png" alt="">
+                        <span>Log In</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <img class="icon" src="/images/serviceIcon.png" alt="">
+                        <span>Sign out</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link logout" href="#">
+                        <img src="/images/logoutIcon.png" alt="">
+                        <span>Log out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
