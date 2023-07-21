@@ -1,0 +1,68 @@
+<html th:replace="~{contentBase :: flexiblelayout(~{::contentBody}, ~{::title})}" xmlns:th="http://www.thymeleaf.org">
+<title>Overview</title>
+<contentBody>
+    <div class="container-fluid px-4">
+        <div class="row">
+            <div class="col-lg-5 mb-3">
+                <div class="row row-cols-2 mb-1 text-center">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">요청 수</h5>
+                                <h3 class="card-title mb-2 fw-bold">1,234회</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">전체 서비스 수</h5>
+                                <h3 class="card-title mb-2 fw-bold">3 개</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row mt-1">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">최근 서비스</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <span class="fs-5 fw-bold">941생</span>
+                                        <span class="text-muted">8일 전 수정됨</span>
+                                        <span class="position-absolute end-0">
+                                        <a href="#" class="btn btn-secondary btn-sm">Details</a>
+                                    </span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fs-5 fw-bold">New Project</span>
+                                        <span class="text-muted">3일 전 수정됨</span>
+                                        <span class="position-absolute end-0">
+                                        <a href="#" class="btn btn-secondary btn-sm">Details</a>
+                                    </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="row">
+                    <div class="col">
+                        <div class="card" style="height: 300px;">
+                            <div class="card-body">
+                                <h5 class="card-title">잔디 깔기 구현 부분</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</contentBody>

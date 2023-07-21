@@ -1,0 +1,21 @@
+<html th:replace="~{base :: flexiblelayout(~{::content})}" xmlns:th="http://www.thymeleaf.org">
+
+<content class="container-fluid row text-center h-75">
+  <div class="align-self-center">
+    <div>
+      <a href="/">
+        <img src="images/loginLogo.png" class="img-fluid rounded" style="width:150px; height:230px;" alt="loginLogo">
+      </a>
+    </div>
+    <div>
+      <a href="/oauth2/authorization/google" class="btn btn-light">
+        <img src="images/SignIn_Google.png" class="img-fluid rounded" style="width:350px; height:70px;" alt="Google">
+      </a>
+    </div>
+    <div>
+      <a href="/oauth2/authorization/github" class="btn btn-light">
+        <img src="images/SignIn_Github.png" class="img-fluid rounded" style="width:350px; height:70px;" alt="Github">
+      </a>
+    </div>
+  </div>
+</content>

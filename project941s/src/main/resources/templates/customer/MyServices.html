@@ -1,0 +1,92 @@
+<html th:replace="~{contentBase :: flexiblelayout(~{::contentBody}, ~{::title})}" xmlns:th="http://www.thymeleaf.org">
+<title>My Services</title>
+
+<contentBody>
+  <div class="container-fluid px-4">
+    <div class="row mb-3">
+      <div class="col-lg-4">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="검색할 서비스의 이름을 입력하세요.">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+            <img src="/images/Search.png" class="img-fluid rounded" style="height:20px;" alt="Search">
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+        <li>
+          서비스 명을 누르면 모니터링 페이지로 넘어갑니다.
+        </li>
+    </div>
+
+    <div class="row border  border-dark rounded mb-3">
+      <table class="table table-striped table-hover">
+        <!--table header-->
+        <thead class="table-dark">
+          <th><input class="form-check-input" type="checkbox" value="" name="_selected_all_"></th>
+          <th>서비스 명</th>
+          <th>상태</th>
+          <th>버전</th>
+          <th>Github 주소</th>
+          <th>최존 수정일</th>
+          <th>control</th>
+        </thead>
+
+        <!--table body-->
+        <tbody>
+          <tr><!-- 첫번째 줄 시작 -->
+            <td><input class="form-check-input" type="checkbox" name="_selected_" value="ROW_1"></td>
+            <td><a href="/" class="link-dark">941_s</a></td>
+            <td><img src="/images/GoodStatus.png" alt="Status"></td>
+            <td>v1.2.1</td>
+            <td>https://github.com/~</td>
+            <td>2023.03.21</td>
+            <td><img src="/images/controlIcon_DetailView.png" alt="DetailView"></td>
+          </tr><!-- 첫번째 줄 끝 -->
+          <tr><!-- 두번째 줄 시작 -->
+            <td><input class="form-check-input" type="checkbox" name="_selected_" value="ROW_2"></td>
+            <td><a href="/" class="link-dark">941_second</a></td>
+            <td><img src="/images/GoodStatus.png" alt="Status"></td>
+            <td>v0.0.1</td>
+            <td>https://github.com/~</td>
+            <td>2023.03.21</td>
+            <td><img href="/" src="/images/controlIcon_DetailView.png" alt="DetailView"></td>
+          </tr><!-- 두번째 줄 끝 -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row mb-3">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="/customer/newService" class="btn btn-sm btn-outline-dark" type="button">
+          <span class="text-dark">+</span> New Project
+        </a>
+        <a href="/customer/newService" class="btn btn-sm btn-outline-dark" type="button">
+          <span class="text-danger">-</span>  Delete Project
+        </a>
+      </div>
+    </div>
+
+    <!--pagination-->
+    <div class="row">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</contentBody>
