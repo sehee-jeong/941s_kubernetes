@@ -3,7 +3,7 @@
 
 <contentBody>
   <div class="container">
-    <form class="row needs-validation text-center" novalidate>
+    <form action="/customer/deploy" method="POST" class="row needs-validation text-center" novalidate>
       <div class="row mt-3">
         <label for="validationDefault01" class="col-lg-3 col-form-label">Github 주소를 입력하세요.</label>
         <div class="col-lg-6">
@@ -35,12 +35,12 @@
             <input type="text" class="form-control" id="validationDefault05" required>
           </div>
           <div class="col-lg-1 d-grid mt-auto">
-            <button id="addEnv" class="btn btn-light btn-outline-secondary mb-auto" type="button">
+            <button id="addEnv" class="btn btn-light btn-outline-secondary mb-auto shadow-sm" type="button">
               <span class="">+</span>
             </button>
           </div>
           <div class="col-lg-1 d-grid me-auto mt-auto">
-            <button id="delEnv" class="btn btn-light btn-outline-secondary mb-auto" type="button">
+            <button id="delEnv" class="btn btn-light btn-outline-secondary mb-auto shadow-sm" type="button">
               <span class="text-danger">-</span>
             </button>
           </div>
@@ -49,7 +49,7 @@
 
 
       <div class="col-3 d-grid mx-auto mt-3">
-        <button class="btn btn-light btn-outline-secondary" type="submit"> Submit </button>
+        <button class="btn btn-light btn-outline-secondary shadow-sm" type="submit"> Submit </button>
       </div>
 
     </form>

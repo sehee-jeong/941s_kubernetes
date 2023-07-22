@@ -1,4 +1,4 @@
-<html th:replace="~{base :: flexiblelayout(~{::content})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{base :: flexiblelayout(~{::content})}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <content class="container-fluid">
     <div class="text-center" style="position:relative;">
@@ -32,7 +32,7 @@
     <div class="card text-center text-bg-primary" style="height: 10rem;">
         <div class="row card-body">
             <div class="align-self-center">
-                <a href="/loginForm" class="btn btn-lg btn-light btn-outline-primary">로그인</a>
+                <a sec:authorize="isAnonymous()" href="/loginForm" class="btn btn-lg btn-light btn-outline-primary">로그인</a>
             </div>
         </div>
     </div>
