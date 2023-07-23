@@ -1,7 +1,7 @@
 package hanium.project941s.dto;
 
 import hanium.project941s.domain.Member;
-import hanium.project941s.domain.Role;
+import hanium.project941s.domain.Enums.Role;
 import lombok.Builder;
 
 import java.util.Map;

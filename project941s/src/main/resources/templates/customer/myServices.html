@@ -35,32 +35,22 @@
 
         <!--table body-->
         <tbody>
-          <tr><!-- 첫번째 줄 시작 -->
-            <td><input class="form-check-input" type="checkbox" name="_selected_" value="ROW_1"></td>
-            <td><a href="#" class="link-dark">941_s</a></td>
-            <td><img src="/images/GoodStatus.png" alt="Status"></td>
-            <td>v1.2.1</td>
-            <td><a href="#" class="link-dark">https://github.com/~</a></td>
-            <td>2023.03.21</td>
+          <tr th:each="userService : ${userServices}">
+            <td><input class="form-check-input" type="checkbox" name="_selected_"></td>
+            <td><a href="#" class="link-dark" th:text="${userService.name}">941_second</a></td>
+            <td>
+              <img th:if="${#strings.equals(userService.serviceStatus, 'SUCCESS')}" src="/images/GoodStatus.png" alt="Status">
+              <img th:if="${#strings.equals(userService.serviceStatus, 'FAIL')}" src="/images/FailStatus.png" alt="Status">
+            </td>
+            <td th:text="${userService.version}">v0.0.1</td>
+            <td><a href="#" class="link-dark" th:text="${userService.githubUrl}">https://github.com/~</a></td>
+            <td th:text="${userService.date}">2023.03.21</td>
             <td>
               <a href="/detail">
-                <img src="/images/controlIcon_DetailView.png" alt="DetailView">
+                <img src="/images/controlIcon_DetailView.png" alt="DetailView"/>
               </a>
             </td>
-          </tr><!-- 첫번째 줄 끝 -->
-          <tr><!-- 두번째 줄 시작 -->
-            <td><input class="form-check-input" type="checkbox" name="_selected_" value="ROW_2"></td>
-            <td><a href="#" class="link-dark">941_second</a></td>
-            <td><img src="/images/GoodStatus.png" alt="Status"></td>
-            <td>v0.0.1</td>
-            <td><a href="#" class="link-dark">https://github.com/~</a></td>
-            <td>2023.03.21</td>
-            <td>
-              <a href="/detail">
-                <img src="/images/controlIcon_DetailView.png" alt="DetailView">
-              </a>
-            </td>
-          </tr><!-- 두번째 줄 끝 -->
+          </tr>
         </tbody>
       </table>
     </div>
@@ -80,16 +70,16 @@
     <div class="row">
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
+          <li class="page-item" th:classappend="${1 == userServices.pageable.pageNumber + 1} ? 'disabled'">
+            <a class="page-link" th:href="@{/customer/myServices(page= ${userServices.pageable.pageNumber - 1})}" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
+          <li class="page-item" th:classappend="${i == userServices.pageable.pageNumber + 1} ? 'active'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
+            <a class="page-link"th:href="@{/customer/myServices(page= ${i - 1})}" th:text="${i}">1</a>
+          </li>
+          <li class="page-item" th:classappend="${endPage == userServices.pageable.pageNumber + 1} ? 'disabled'">
+            <a class="page-link"  th:href="@{/customer/myServices(page= ${userServices.pageable.pageNumber + 1})}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>

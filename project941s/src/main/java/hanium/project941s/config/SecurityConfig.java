@@ -1,6 +1,6 @@
 package hanium.project941s.config;
 
-import hanium.project941s.domain.Role;
+import hanium.project941s.domain.Enums.Role;
 import hanium.project941s.handler.UrlAuthenticationSuccessHandler;
 import hanium.project941s.service.OAuth2MemberService;
 import lombok.RequiredArgsConstructor;

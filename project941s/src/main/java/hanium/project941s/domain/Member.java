@@ -1,11 +1,15 @@
 package hanium.project941s.domain;
 
 
+import hanium.project941s.domain.Enums.Role;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -19,6 +23,12 @@ public class Member {
     private String memberProviderId; // 공급자_공급 아이디
     private String provider; //공급자 (google, github ...)
     private String providerId; //공급 아이디
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<MemberService> memberServices = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<MemberAct> memberActs = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

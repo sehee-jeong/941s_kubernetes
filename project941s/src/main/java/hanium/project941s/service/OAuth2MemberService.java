@@ -1,6 +1,6 @@
 package hanium.project941s.service;
 
-import hanium.project941s.domain.Role;
+import hanium.project941s.domain.Enums.Role;
 import hanium.project941s.dto.OAuthAttributes;
 import hanium.project941s.dto.PrincipalDetails;
 import hanium.project941s.repository.MemberRepository;
