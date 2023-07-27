@@ -6,69 +6,86 @@
 </title>
 
 <contentBody class="container-fluid">
-    <div class="row px-3">
-        <!--  요청수, 버전, url container -->
-        <div class="col-4">
-            <div class="row text-center">
+    <div class="row px-3 pb-1 g-1 h-50">
+        <!--  요청수, 버전, url -->
+        <div class="col-5 h-100">
+            <div class="row row-cols-2 pb-1 text-center g-1 h-75">
                 <div class="col">
-                    <div class="card">
-                        <div class="card-body">요청수</div>
-                        <div class="card-body" th:text="${callCount}"></div>
+                    <!-- 요청 수 첨포넌트 -->
+                    <div class="card h-100">
+                        <div class="card-body fs-2">요청수</div>
+                        <div class="card-body fs-2" th:text="${callCount}"></div>
                     </div>
                 </div>
 
                 <div class="col">
-                    <div class="card">
-                        <div class="card-body">버전</div>
-                        <div class="card-body" th:text="${version}"></div>
+                    <!-- 버전 컴포넌트 -->
+                    <div class="card h-100">
+                        <div class="card-body fs-2">버전</div>
+                        <div class="card-body fs-2" th:text="${version}"></div>
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body" th:text="${url}"></div>
+
+            <!-- url 컴포넌트 -->
+            <div class="card mt-1 h-25">
+                <div class="card-body h-100 position-relative">
+                    <div class="card-text ps-2 position-absolute top-50 start-0 translate-middle-y"  th:text="${url}">localhost:8080</div>
+                </div>
             </div>
         </div>
 
-        <!-- 요청 수 그래프 컴포넌트 -->
-        <div class="col-8">
-            <div class="card">
-                <div class="card-body">일별 요청 수</div>
-                <div class="card-body">그래프</div>
+        <!-- 통계 컴포넌트 -->
+        <div class="col-7">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">연간 통계</h3>
+                    <p class="card-text">그래프</p>
+                </div>
             </div>
         </div>
+    </div>
 
+    <div class="row px-3 pt-1 g-1 h-75">
         <!-- 서비스 콘솔 컴포넌트 -->
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">서비스 콘솔</div>
-                <ul class="list-group list-group-flush" th:each="s : ${services}">
-                    <li class="list-group-item" th:text="${s}"></li>
-                </ul>
+        <div class="col-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-title">
+                        서비스 콘솔
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="s : ${services}" th:text="${s}"></li>
+                    </ul>
+                </div>
+
             </div>
         </div>
 
         <!-- 수정내역 컴포넌트 -->
-        <div class="col-8">
-            <div class="card">
-                <div class="card-body">수정 내역</div>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">유형</th>
-                        <th scope="col">버전</th>
-                        <th scope="col">코멘트</th>
-                        <th scope="col">수정일자</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="fix : ${fixes}">
-                        <th scope="row" th:text="${fix.type}"></th>
-                        <td th:text="${fix.version}"></td>
-                        <td th:text="${fix.comments}"></td>
-                        <td th:text="${fix.date}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="col-7">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-title">최근 활동</div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">유형</th>
+                            <th scope="col">버전</th>
+                            <th scope="col">코멘트</th>
+                            <th scope="col">수정일자</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="fix : ${fixes}">
+                            <th scope="row" th:text="${fix.type}"></th>
+                            <td th:text="${fix.version}"></td>
+                            <td th:text="${fix.comments}"></td>
+                            <td th:text="${fix.date}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

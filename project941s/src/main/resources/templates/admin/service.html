@@ -7,9 +7,9 @@
 
 <contentBody class="container-fluid">
     <form>
-        <table class="table">
+        <table class="table table-bordered h-100">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th scope="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbos" value="" id
@@ -28,7 +28,7 @@
                 <tr th:each="service : ${services}">
                     <th scope="row">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbos" value="" id
+                            <input class="form-check-input" type="checkbox" value="">
                         </div>
                     </th>
                     <td th:each="${service.name}">서비스명</td>
@@ -41,6 +41,8 @@
                 </tr>
             </tbody>
         </table>
-        <button type="submit" class="btn btn-primary">Delete</button>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-primary">Delete</button>
+        </div>
     </form>
 </contentBody>
