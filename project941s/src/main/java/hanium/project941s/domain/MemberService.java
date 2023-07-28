@@ -38,16 +38,10 @@ public class MemberService {
     private List<ServiceEnv> serviceEnvs = new ArrayList<>();
 
     @Builder
-<<<<<<< HEAD
-    public MemberService(String name, String version, Date date) {
-        this.name = name;
-        this.version = version;
-=======
     public MemberService(String name, String version, String githubUrl, Date date) {
         this.name = name;
         this.version = version;
         this.githubUrl = githubUrl;
->>>>>>> 5f663211d682114149cd85a373c14e1302729cc3
         this.date = date;
     }
 }

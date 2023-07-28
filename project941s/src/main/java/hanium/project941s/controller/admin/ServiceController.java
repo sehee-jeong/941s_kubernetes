@@ -1,10 +1,7 @@
 package hanium.project941s.controller.admin;
 
-<<<<<<< HEAD
-import hanium.project941s.domain.Service;
-=======
+
 import hanium.project941s.domain.MemberService;
->>>>>>> 5f663211d682114149cd85a373c14e1302729cc3
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +14,6 @@ import java.util.List;
 public class ServiceController {
     @RequestMapping("/admin/service")
     public String service(Model model) {
-<<<<<<< HEAD
-        Service[] services = new Service[5];
-
-=======
         MemberService service1 = MemberService
                 .builder()
                 .name("941s")
@@ -42,7 +35,6 @@ public class ServiceController {
         services.add(service2);
 
         model.addAttribute("services", services);
->>>>>>> 5f663211d682114149cd85a373c14e1302729cc3
 
         return "admin/service";
     }
