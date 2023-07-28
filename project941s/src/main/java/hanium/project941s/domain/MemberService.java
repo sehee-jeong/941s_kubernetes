@@ -38,9 +38,10 @@ public class MemberService {
     private List<ServiceEnv> serviceEnvs = new ArrayList<>();
 
     @Builder
-    public MemberService(String name, String version, Date date) {
+    public MemberService(String name, String version, String githubUrl, Date date) {
         this.name = name;
         this.version = version;
+        this.githubUrl = githubUrl;
         this.date = date;
     }
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,6 +25,9 @@ public class Member {
     private String provider; //공급자 (google, github ...)
     private String providerId; //공급 아이디
 
+    private Date date; // 최초 등록일
+    private Date latestDate; // 최근 접속일
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberService> memberServices = new ArrayList<>();
 
@@ -35,11 +39,21 @@ public class Member {
     private Role role; //유저 권한 (관리자, 고객)
 
     @Builder
-    public Member(String name, String memberProviderId, Role role, String provider, String providerId) {
+    public Member(String name, String memberProviderId, Role role, String provider, String providerId, Date date, Date latestDate) {
         this.name = name;
         this.memberProviderId = memberProviderId;
         this.role = role;
         this.provider = provider;
         this.providerId = providerId;
+        this.date = date;
+        this.latestDate = latestDate;
+    }
+
+    public void addService(MemberService service) {
+        this.memberServices.add(service);
+    }
+
+    public void addAct(MemberAct act) {
+        this.memberActs.add(act);
     }
 }

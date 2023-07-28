@@ -21,7 +21,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create # 기존테이블 삭제 후 다시 생성 (DROP + CREATE)
+      ddl-auto: update # 기존테이블 삭제 후 다시 생성 (DROP + CREATE)
     properties:
       hibernate:
         #        show_sql: true # Hibernate이 DB에 날리는 모든 쿼리(DDL, DML)를 보여준다

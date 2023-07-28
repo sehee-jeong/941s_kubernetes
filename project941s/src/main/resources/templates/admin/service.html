@@ -12,7 +12,7 @@
                 <tr>
                     <th scope="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbos" value="" id
+                            <input class="form-check-input" type="checkbox" value="" id="header-checkbox">
                         </div>
                     </th>
                     <th scope="col">서비스 명</th>
@@ -28,19 +28,30 @@
                 <tr th:each="service : ${services}">
                     <th scope="row">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbos" value="" id
+                            <input class="form-check-input" type="checkbos" value="">
                         </div>
                     </th>
-                    <td th:each="${service.name}">서비스명</td>
-                    <td th:each="${service.state}">상태</td>
-                    <td th:each="${service.version}">버전</td>
-                    <td th:each="${service.githubUrl}">github주소</td>
-                    <td th:each="${service.port}">개방 포트</td>
-                    <td th:each="${service.latestDate}">최종 수정일</td>
-                    <td>control</td>
+                    <td th:text="${service.name}">서비스명</td>
+<!--                    <td th:each="${service.state}">상태</td>-->
+                    <td>상태</td>
+                    <td th:text="${service.version}">버전</td>
+                    <td th:text="${service.githubUrl}">github주소</td>
+                    <td th:text="${service.serviceEnvs}">개방 포트</td>
+                    <td>수정일</td>
+<!--                    <td th:each="${service.latestDate}">최종 수정일</td>-->
+                    <td>
+                        <div class="d-flex flex-row mb-3">
+                            <a class="mx-1" href="#">
+                                <img src="/images/info.png" alt="">
+                            </a>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
+
         </table>
-        <button type="submit" class="btn btn-primary">Delete</button>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary d-flex justify-content-end">Delete</button>
+        </div>
     </form>
 </contentBody>
