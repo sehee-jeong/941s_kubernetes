@@ -35,3 +35,6 @@ nbdist/
 
 ### VS Code ###
 .vscode/
+
+### application-*.yaml ###
+# application-oauth.yaml

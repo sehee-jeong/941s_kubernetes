@@ -1,0 +1,90 @@
+<html th:replace="~{contentBase :: flexiblelayout(~{::contentBody}, ~{::title})}" xmlns:th="http://www.thymeleaf.org">
+<title>My Services</title>
+
+<contentBody>
+  <div class="container-fluid px-4">
+    <div class="row mb-3">
+      <div class="col-lg-4">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="검색할 서비스의 이름을 입력하세요.">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+            <img src="/images/Search.png" class="img-fluid rounded" style="height:20px;" alt="Search">
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+        <li>
+          서비스 명을 누르면 모니터링 페이지로 넘어갑니다.
+        </li>
+    </div>
+
+    <div class="row border  border-dark rounded mb-3">
+      <table class="table table-striped table-hover">
+        <!--table header-->
+        <thead class="table-dark">
+          <th><input class="form-check-input" type="checkbox" value="" name="_selected_all_"></th>
+          <th>서비스 명</th>
+          <th>상태</th>
+          <th>버전</th>
+          <th>Github 주소</th>
+          <th>최존 수정일</th>
+          <th>control</th>
+        </thead>
+
+        <!--table body-->
+        <tbody>
+          <tr th:each="userService : ${userServices}">
+            <td><input class="form-check-input" type="checkbox" name="_selected_"></td>
+            <td><a href="#" class="link-dark" th:text="${userService.name}">941_second</a></td>
+            <td>
+              <img th:if="${#strings.equals(userService.serviceStatus, 'SUCCESS')}" src="/images/GoodStatus.png" alt="Status">
+              <img th:if="${#strings.equals(userService.serviceStatus, 'FAIL')}" src="/images/FailStatus.png" alt="Status">
+            </td>
+            <td th:text="${userService.version}">v0.0.1</td>
+            <td><a href="#" class="link-dark" th:text="${userService.githubUrl}">https://github.com/~</a></td>
+            <td th:text="${userService.date}">2023.03.21</td>
+            <td>
+              <a href="/detail">
+                <img src="/images/controlIcon_DetailView.png" alt="DetailView"/>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row mb-3">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="/customer/newService" class="btn btn-sm btn-outline-dark" type="button">
+          <span class="text-dark">+</span> New Project
+        </a>
+        <a href="/customer/newService" class="btn btn-sm btn-outline-dark" type="button">
+          <span class="text-danger">-</span>  Delete Project
+        </a>
+      </div>
+    </div>
+
+    <!--pagination-->
+    <div class="row">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" th:classappend="${1 == userServices.pageable.pageNumber + 1} ? 'disabled'">
+            <a class="page-link" th:href="@{/customer/myServices(page= ${userServices.pageable.pageNumber - 1})}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" th:classappend="${i == userServices.pageable.pageNumber + 1} ? 'active'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
+            <a class="page-link"th:href="@{/customer/myServices(page= ${i - 1})}" th:text="${i}">1</a>
+          </li>
+          <li class="page-item" th:classappend="${endPage == userServices.pageable.pageNumber + 1} ? 'disabled'">
+            <a class="page-link"  th:href="@{/customer/myServices(page= ${userServices.pageable.pageNumber + 1})}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</contentBody>

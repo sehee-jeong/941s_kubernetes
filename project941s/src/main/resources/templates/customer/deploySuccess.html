@@ -1,0 +1,21 @@
+<html th:replace="~{contentBase :: flexiblelayout(~{::contentBody}, ~{::title})}" xmlns:th="http://www.thymeleaf.org">
+<title>배포 완료</title>
+
+<contentBody>
+    <div class="text-center mt-5">
+        <div>
+            <img src="/images/successIcon.png" class="img-fluid rounded" width="200" height="300" alt="deploySuccessLogo">
+        </div>
+        <h3> 배포가 완료되었습니다. (링크 클릭시 이동합니다.)</h3>
+        <a href="#">https://941_s_...</a>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-3">
+            <a href="/detail" class="col-lg-2 btn btn-light btn-outline-secondary btn-sm shadow-sm" type="button">
+                <span class="text-dark">서비스 상태 보기</span>
+            </a>
+            <a href="/customer/overview" class="col-lg-2 btn btn-light btn-outline-secondary btn-sm shadow-sm" type="button">
+                <span class="text-dark">홈으로 돌아가기</span>
+            </a>
+        </div>
+    </div>
+</contentBody>

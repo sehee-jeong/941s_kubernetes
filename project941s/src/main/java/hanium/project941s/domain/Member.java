@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
+=======
+import java.util.Date;
+>>>>>>> 5f663211d682114149cd85a373c14e1302729cc3
 import java.util.List;
 
 @Entity
@@ -24,6 +28,12 @@ public class Member {
     private String provider; //공급자 (google, github ...)
     private String providerId; //공급 아이디
 
+<<<<<<< HEAD
+=======
+    private Date date; // 최초 등록일
+    private Date latestDate; // 최근 접속일
+
+>>>>>>> 5f663211d682114149cd85a373c14e1302729cc3
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberService> memberServices = new ArrayList<>();
 
@@ -35,11 +45,28 @@ public class Member {
     private Role role; //유저 권한 (관리자, 고객)
 
     @Builder
+<<<<<<< HEAD
     public Member(String name, String memberProviderId, Role role, String provider, String providerId) {
+=======
+    public Member(String name, String memberProviderId, Role role, String provider, String providerId, Date date, Date latestDate) {
+>>>>>>> 5f663211d682114149cd85a373c14e1302729cc3
         this.name = name;
         this.memberProviderId = memberProviderId;
         this.role = role;
         this.provider = provider;
         this.providerId = providerId;
+<<<<<<< HEAD
+=======
+        this.date = date;
+        this.latestDate = latestDate;
+    }
+
+    public void addService(MemberService service) {
+        this.memberServices.add(service);
+    }
+
+    public void addAct(MemberAct act) {
+        this.memberActs.add(act);
+>>>>>>> 5f663211d682114149cd85a373c14e1302729cc3
     }
 }

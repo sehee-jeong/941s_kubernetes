@@ -1,0 +1,50 @@
+<html th:replace="~{contentBase :: flexiblelayout(~{::contentBody}, ~{::title})}" xmlns:th="http://www.thymeleaf.org">
+
+
+<title class="bg-light">
+    사용자 관리
+</title>
+
+<contentBody class="container-fluid">
+    <form th:action="@{/}" class="row mb-3">
+        <div class="col-lg-4">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="검색할 사용자의 이름을 입력하세요.">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                    <img src="/images/Search.png" class="img-fluid rounded" style="height:20px;" alt="Search">
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">계정</th>
+                <th scope="col">등록일</th>
+                <th scope="col">최근활동일</th>
+                <th scope="col">서비스 수</th>
+                <th scope="col">control</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="member : ${members}">
+                <th th:text="${member.name}"scope="row"></th>
+                <td th:text="${member.date}">서비스명</td>
+                <td th:text="${member.latestDate}">상태</td>
+<!--                <td th:text="${member.getServiceCount()}">버전</td>-->
+                <td th:text="${1}">서비스 수</td>
+                <td>
+                    <div class="d-flex flex-row mb-3">
+                        <a class="mx-1" href="#">
+                            <img src="/images/monitor.png" width="24" height="24" alt="">
+                        </a>
+                        <a class="mx-1" href="#">
+                            <img src="/images/memberService.png" width="24" height="24" alt="">
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</contentBody>
