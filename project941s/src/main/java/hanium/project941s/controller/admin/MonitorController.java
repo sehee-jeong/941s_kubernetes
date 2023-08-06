@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MonitorController {
-    @RequestMapping("monitor")
+    @RequestMapping("/admin/monitor")
     public String monitor(Model model){
         return "admin/monitor";
     }
