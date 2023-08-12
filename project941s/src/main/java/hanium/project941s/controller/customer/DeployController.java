@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class DeployController {
 
-    @PostMapping("/customer/deploy")
+    @PostMapping("/customer/deploySuccess")
     public String createDeploy(Model model){
         return "customer/deploySuccess";
     }
-    @GetMapping("/customer/deploy")
+    @GetMapping("/customer/deployFail")
     public String createfailDeploy(Model model){
         return "customer/deployFail";
     }
