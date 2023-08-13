@@ -8,6 +8,8 @@ spring:
 #    database: h2
 #    show-sql: true
 
+  server:
+    port: 9100
   profiles:
     include: oauth
 
