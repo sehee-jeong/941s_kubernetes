@@ -27,17 +27,20 @@
 
         <!-- 로그인 되었을 때 -->
         <ul class="nav" sec:authorize="isAuthenticated()">
-          <li class="nav-item my-auto">
-            <span class="navbar-text">
-              <span sec:authentication="principal.member.name"/>님 안녕하세요!
-            </span>
-          </li>
-          <li class="nav-item" >
-            <a class="nav-link link-dark" href="/logout">로그아웃</a>
+          <li class="nav-item my-auto dropdown">
+<!--            <span class="navbar-text">-->
+<!--              <span sec:authentication="principal.member.name"/>님 안녕하세요!-->
+<!--            </span>-->
+            <a class="nav-link dropdown-toggle navbar-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span sec:authentication="principal.member.name"/>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" sec:authentication="principal.member.providerId"></a></li>
+              <li><a class="nav-link link-dark" href="/logout">로그아웃</a></li>
+            </ul>
           </li>
         </ul>
       </div>
-
     </div>
   </nav>
 </div>
