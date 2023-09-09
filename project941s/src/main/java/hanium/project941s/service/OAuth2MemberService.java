@@ -29,6 +29,7 @@ public class OAuth2MemberService extends DefaultOAuth2UserService {
         // name 생성
         String provider = userRequest.getClientRegistration().getRegistrationId(); //google
         String providerId = oAuth2User.getAttribute("sub");
+        if (provider.equals("github")) providerId = oAuth2User.getAttribute("id").toString();
         String findByMemberProviderId = provider + "_" + providerId;
         Map<String, Object> attributes = oAuth2User.getAttributes();
         Role role = Role.USER; //일반 유저
