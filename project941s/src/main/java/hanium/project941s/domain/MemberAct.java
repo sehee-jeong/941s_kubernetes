@@ -18,8 +18,11 @@ public class MemberAct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "memberAct_id")
     private Long id; //기본키
-    private String name;
     private String version; //버전
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id")
+    private MemberService service;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")

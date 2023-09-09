@@ -1,6 +1,5 @@
 package hanium.project941s.domain;
 
-import hanium.project941s.domain.Enums.ActType;
 import hanium.project941s.domain.Enums.ServiceStatus;
 import jakarta.persistence.*;
 import lombok.Builder;

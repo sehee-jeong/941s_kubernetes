@@ -1,0 +1,28 @@
+<html th:replace="~{contentBase :: flexiblelayout(~{::contentBody}, ~{::title})}" xmlns:th="http://www.thymeleaf.org">
+<title>
+  <span th:text="|${serviceName}|">
+  </span>
+</title>
+
+<contentBody>
+  <div class="text-center mt-5">
+    <div th:if="${buildStatus == 'FAILURE'}">
+      <h2 class="text-danger fw-bold" th:text="${buildStatus}">
+      </h2>
+    </div>
+    <div th:if="${buildStatus == 'SUCCESS'}">
+      <h2 class="text-success fw-bold"th:text="${buildStatus}"></h2>
+    </div>
+    <div th:unless="${buildStatus == 'FAILURE' or buildStatus == 'SUCCESS'}">
+      <h2 class="fw-bold"th:text="${buildStatus}"></h2>
+    </div>
+
+    <textarea th:rows="20" th:cols="150" th:text="${buildLog}" th:readonly="readonly"></textarea>
+
+    <div class="d-grid d-md-flex justify-content-md-center mt-3">
+      <a th:href="@{/customer/buildViewer (serviceName=${serviceName})}" class="col-lg-2 btn btn-light btn-outline-secondary btn-sm shadow-sm" type="button submit">
+        <span class="text-dark fw-bold">서비스 빌드 최신 상태 보기</span>
+      </a>
+    </div>
+  </div>
+</contentBody>

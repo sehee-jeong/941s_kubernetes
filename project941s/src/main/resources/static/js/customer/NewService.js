@@ -3,11 +3,11 @@ $(document).ready(function() {
     $('#addEnv').click(function() {
         $('#envKVP').append (
             '<div class="row mt-2">\n' +
-            '    <div class="col-lg-3 ms-auto">\n' +
-            '        <input type="text" class="form-control" required>\n' +
+            '    <div class="col-5 offset-lg-3 col-lg-3">\n' +
+            '        <input type="text" name="keys" class="form-control">\n' +
             '    </div>\n' +
-            '    <div class="col-lg-3 me-auto">\n' +
-            '        <input type="text" class="form-control" required>\n' +
+            '    <div class="col-5 col-lg-3">\n' +
+            '        <input type="text" name="values" class="form-control">\n' +
             '    </div>\n' +
             '</div>'
         );
@@ -39,3 +39,4 @@ $(document).ready(function() {
         })
     })()
 });
+

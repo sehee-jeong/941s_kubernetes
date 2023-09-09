@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project>
+    <actions/>
+    <description/>
+    <keepDependencies>false</keepDependencies>
+    <properties>
+        <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+            </parameterDefinitions>
+        </hudson.model.ParametersDefinitionProperty>
+        <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.7.15">
+            <gitLabConnection/>
+            <jobCredentialId/>
+            <useAlternativeCredential>false</useAlternativeCredential>
+        </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
+    </properties>
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@5.2.0">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+            <hudson.plugins.git.UserRemoteConfig>
+                <url>https://github.com/Chosun-AMD/public.git</url>
+            </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+            <hudson.plugins.git.BranchSpec>
+                <name>*/main</name>
+            </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="empty-list"/>
+        <extensions/>
+    </scm>
+    <canRoam>true</canRoam>
+    <disabled>false</disabled>
+    <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+    <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <triggers>
+        <hudson.triggers.SCMTrigger>
+            <spec>* * * * *</spec>
+            <ignorePostCommitHooks>false</ignorePostCommitHooks>
+        </hudson.triggers.SCMTrigger>
+    </triggers>
+    <concurrentBuild>false</concurrentBuild>
+    <builders>
+        <hudson.tasks.Shell>
+            <command>chmod +x gradlew &#xA;./gradlew clean build &#xA;mkdir -p dist &#xA;cp ./build/libs/*.jar ./dist/ &#xA;tar -zcvf deploy.tar.gz ./dist</command>
+            <configuredLocalRules/>
+        </hudson.tasks.Shell>
+        <hudson.tasks.Shell>
+            <command>aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com &amp;&amp; docker build -t 941s . &amp;&amp; docker tag 941s:latest 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com/941s:latest &amp;&amp; docker push 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com/941s:latest</command>
+            <configuredLocalRules/>
+        </hudson.tasks.Shell>
+        <jenkins.plugins.publish__over__ssh.BapSshBuilderPlugin plugin="publish-over-ssh@1.24">
+            <delegate>
+                <consolePrefix>SSH: </consolePrefix>
+                <delegate plugin="publish-over@0.22">
+                    <publishers>
+                        <jenkins.plugins.publish__over__ssh.BapSshPublisher plugin="publish-over-ssh@1.24">
+                            <configName>master</configName>
+                            <verbose>false</verbose>
+                            <transfers>
+                                <jenkins.plugins.publish__over__ssh.BapSshTransfer>
+                                    <remoteDirectory/>
+                                    <sourceFiles/>
+                                    <excludes/>
+                                    <removePrefix/>
+                                    <remoteDirectorySDF>false</remoteDirectorySDF>
+                                    <flatten>false</flatten>
+                                    <cleanRemote>false</cleanRemote>
+                                    <noDefaultExcludes>false</noDefaultExcludes>
+                                    <makeEmptyDirs>false</makeEmptyDirs>
+                                    <patternSeparator>[, ]+</patternSeparator>
+                                    <execCommand>sh /941/secret.sh 941s sh /941/yaml_generator.sh 941s testservice941 941s.yaml 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com/941s:latest 30298 80 VAR1=value1 VAR2=value2 kubectl apply -f /941/941s.yaml</execCommand>
+<!--                                    <execCommand>sh /941/secret.sh {namespace}-->
+<!--                                        sh /941/yaml_generator.sh {namespace} {serviceName(대문자 X)} {*.yaml} 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com/{namespace}:latest 30298 80 VAR1=value1 VAR2=value2 kubectl apply -f /941/{*.yaml}</execCommand>-->
+                                    <execTimeout>120000</execTimeout>
+                                    <usePty>false</usePty>
+                                    <useAgentForwarding>false</useAgentForwarding>
+                                    <useSftpForExec>false</useSftpForExec>
+                                </jenkins.plugins.publish__over__ssh.BapSshTransfer>
+                            </transfers>
+                            <useWorkspaceInPromotion>false</useWorkspaceInPromotion>
+                            <usePromotionTimestamp>false</usePromotionTimestamp>
+                        </jenkins.plugins.publish__over__ssh.BapSshPublisher>
+                    </publishers>
+                    <continueOnError>false</continueOnError>
+                    <failOnError>false</failOnError>
+                    <alwaysPublishFromMaster>false</alwaysPublishFromMaster>
+                    <hostConfigurationAccess class="jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin" reference="../.."/>
+                </delegate>
+            </delegate>
+        </jenkins.plugins.publish__over__ssh.BapSshBuilderPlugin>
+    </builders>
+    <publishers/>
+    <buildWrappers>
+        <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.23"/>
+    </buildWrappers>
+</project>
