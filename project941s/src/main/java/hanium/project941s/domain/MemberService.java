@@ -24,6 +24,7 @@ public class MemberService {
     private String version; //서비스 버전
     private String githubUrl; //github url
     private String url; //deploy url
+    private int port; // 외부 개방 포트
     private Date date; //수정일
 
     @Enumerated(EnumType.STRING)
@@ -41,12 +42,14 @@ public class MemberService {
     private List<MemberAct> memberActs = new ArrayList<>();
 
     @Builder
-    public MemberService(String name, String githubUrl, Date date, ServiceStatus serviceStatus, String version) {
+    public MemberService(String name, String githubUrl, String url, Date date, ServiceStatus serviceStatus, String version, int port) {
         this.name = name;
         this.githubUrl = githubUrl;
+        this.url = url;
         this.date = date;
         this.serviceStatus = serviceStatus;
         this.version = version;
+        this.port = port;
     }
 
     //==연관관계 메서드==//
@@ -60,13 +63,15 @@ public class MemberService {
     }
 
     //==생성 메서드==//
-    public static MemberService createMemberService(NewServiceDTO newServiceDTO, Member member, MemberAct memberAct){
+    public static MemberService createMemberService(String EksUrl, NewServiceDTO newServiceDTO, Member member, MemberAct memberAct){
         MemberService memberService = MemberService.builder()
                 .name(newServiceDTO.getServiceName())
                 .githubUrl(newServiceDTO.getGithubUrl())
+                .url(EksUrl + newServiceDTO.getOutterPort())
                 .date(new Date())
                 .serviceStatus(ServiceStatus.FAILURE)
                 .version(memberAct.getVersion())
+                .port(newServiceDTO.getOutterPort())
                 .build();
 
         member.addAct(memberAct);

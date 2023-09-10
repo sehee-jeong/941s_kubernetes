@@ -9,7 +9,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MyServicesController {
     private final ServiceRepository serviceRepository;
 
-    @RequestMapping("/customer/myServices")
+    @GetMapping("/customer/myServices")
     public String MyServices(Model model, @PageableDefault(size = 10) Pageable pageable){
 
         Page<MemberService> memberServices = serviceRepository.findAll(pageable);
@@ -33,6 +37,17 @@ public class MyServicesController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("userServices", memberServices);
 
+//        model.addAttribute("deleteServices", new List<Integer>());
+
         return "customer/myServices";
+    }
+
+    @Transactional
+    @PostMapping("/customer/deleteService")
+    public String deleteService(@RequestParam("_selected_") String[] deleteServices){
+        for (String str : deleteServices){
+            serviceRepository.deleteById(Long.parseLong(str));
+        }
+        return "redirect:/customer/myServices";
     }
 }

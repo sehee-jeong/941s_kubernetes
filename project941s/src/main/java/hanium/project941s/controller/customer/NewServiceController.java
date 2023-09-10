@@ -2,6 +2,7 @@ package hanium.project941s.controller.customer;
 
 import hanium.project941s.dto.NewServiceDTO;
 import hanium.project941s.dto.PrincipalDetails;
+import hanium.project941s.service.JenkinsService;
 import hanium.project941s.service.MemberServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +21,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class NewServiceController {
     private final MemberServiceService memberServiceService;
+    private final JenkinsService jenkinsService;
 
     @GetMapping("/customer/newService")
     public String newService(Model model){
@@ -34,7 +36,7 @@ public class NewServiceController {
                                    @RequestParam("values") String[] values,
                                    RedirectAttributes re) {
         // Port, Env 설정
-        int port = formDto.getPort();
+        int port = formDto.getInnerPort();
         formDto.getEnv().put("port", new ArrayList<String>(Arrays.asList(String.valueOf(port))));
         for (int i = 0; i < keys.length; i++) {
             formDto.getEnv().put(keys[i], new ArrayList<String>(Arrays.asList(values[i])));
@@ -42,12 +44,15 @@ public class NewServiceController {
         // serviceName 소문자로 변경
         String serviceName = formDto.getServiceName().toLowerCase();
         formDto.setServiceName(serviceName);
+        // outterPort 설정
+        int outterPort = memberServiceService.getUniquePort();
+        formDto.setOutterPort(outterPort);
 
         // Job 생성
         String memberProviderId = principal.getMember().getMemberProviderId();
-        if (memberServiceService.createJobToJenkins(formDto, memberProviderId) == false){
-            return "customer/deployFail";
-        }
+//        if (jenkinsService.createJobToJenkins(formDto, memberProviderId) == false){
+//            return "customer/deployFail";
+//        }
         // DB 추가
         if (memberServiceService.createMemberService(formDto, memberProviderId) == false){
             return "customer/deployFail";
@@ -65,10 +70,10 @@ public class NewServiceController {
         model.addAttribute("serviceName", serviceName);
 
         String jenkinsSerivceName = principal.getMember().getMemberProviderId() + "-" + serviceName;
-        String buildStatus = memberServiceService.checkServiceBuild(jenkinsSerivceName);
+        String buildStatus = jenkinsService.checkServiceBuild(jenkinsSerivceName);
         model.addAttribute("buildStatus", buildStatus);
 
-        String buildLog = memberServiceService.receiveServiceBuildLog(jenkinsSerivceName);
+        String buildLog = jenkinsService.receiveServiceBuildLog(jenkinsSerivceName);
         model.addAttribute("buildLog", buildLog);
         return "customer/deploy";
     }

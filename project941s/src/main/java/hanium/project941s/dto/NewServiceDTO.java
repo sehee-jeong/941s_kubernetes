@@ -9,7 +9,8 @@ import java.util.List;
 public class NewServiceDTO {
     private String githubUrl;
     private String serviceName;
-    private int port;
+    private int innerPort;
+    private int outterPort;
     private HashMap<String, List<String>> env = new HashMap<>();
 
     @Override
@@ -17,7 +18,7 @@ public class NewServiceDTO {
         return "NewServiceDTO{" +
                 "githubUrl='" + githubUrl + '\'' +
                 ", serviceName='" + serviceName + '\'' +
-                ", port=" + port +
+                ", port=" + innerPort +
                 ", env=" + env +
                 '}';
     }

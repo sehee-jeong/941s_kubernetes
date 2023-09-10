@@ -11,4 +11,8 @@ public interface ServiceRepository extends JpaRepository<MemberService, Long> {
     public MemberService getOne(Long id);
 
     public List<MemberService> findByMember_Id(Long id);
+
+    public List<MemberService> findAllByOrderByPortAsc();
+
+    public void deleteById(Long id);
 }
