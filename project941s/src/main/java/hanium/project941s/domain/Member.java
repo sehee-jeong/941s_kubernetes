@@ -50,11 +50,9 @@ public class Member {
         this.latestDate = latestDate;
     }
 
-    public void addService(MemberService service) {
-        this.memberServices.add(service);
-    }
-
+    //==연관관계 메서드==//
     public void addAct(MemberAct act) {
         this.memberActs.add(act);
+        act.setMember(this);
     }
 }

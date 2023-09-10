@@ -20,18 +20,18 @@ public class MyServicesController {
     @RequestMapping("/customer/myServices")
     public String MyServices(Model model, @PageableDefault(size = 10) Pageable pageable){
 
-        Page<MemberService> userServices = serviceRepository.findAll(pageable);
+        Page<MemberService> memberServices = serviceRepository.findAll(pageable);
 
 //        int startPage = Math.max(1, userServices.getPageable().getPageNumber() - 4);
 //        int minEndPage = Math.max(1, userServices.getTotalPages());
 //        int endPage = Math.min(minEndPage, userServices.getPageable().getPageNumber() + 4);
 
         int startPage = 1;
-        int endPage = Math.max(1, userServices.getTotalPages());
+        int endPage = Math.max(1, memberServices.getTotalPages());
 
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        model.addAttribute("userServices", userServices);
+        model.addAttribute("userServices", memberServices);
 
         return "customer/myServices";
     }

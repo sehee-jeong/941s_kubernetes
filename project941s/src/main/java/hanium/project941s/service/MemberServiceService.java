@@ -1,15 +1,22 @@
 package hanium.project941s.service;
 
 import com.cdancy.jenkins.rest.JenkinsClient;
+import com.cdancy.jenkins.rest.domain.common.RequestStatus;
 import com.cdancy.jenkins.rest.domain.job.BuildInfo;
 import com.cdancy.jenkins.rest.domain.job.JobInfo;
+import hanium.project941s.domain.Enums.ActType;
+import hanium.project941s.domain.Member;
+import hanium.project941s.domain.MemberAct;
+import hanium.project941s.domain.MemberService;
 import hanium.project941s.dto.NewServiceDTO;
 import hanium.project941s.repository.MemberRepository;
+import hanium.project941s.repository.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -25,34 +32,25 @@ import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+//@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberServiceService {
 
     private final MemberRepository memberRepository;
+    private final ServiceRepository serviceRepository;
 
     private String conAddr = "http://117.16.17.165:30000/job/HYLEE/";
     private String conNameKey = "k8s_jenkins165:111771fcf88cc2f8afaa25ff24b51a313c";
 
-    public boolean createService(NewServiceDTO newServiceDTO, String memberProviderId){
+    public boolean createJobToJenkins(NewServiceDTO newServiceDTO, String memberProviderId){
         String serviceName = memberProviderId + "-" + newServiceDTO.getServiceName();
 
-        // Jenkins Job생성
-        if (this.createJobToJenkins(newServiceDTO, serviceName) == false){
-            return false;
-        }
-
-        // DB MemberService 추가
-
-
-        return true;
-    }
-
-    private boolean createJobToJenkins(NewServiceDTO newServiceDTO, String serviceName){
         JenkinsClient client = JenkinsClient.builder()
                 .endPoint(conAddr) // Optional.
                 .credentials(conNameKey) // Optional.
@@ -64,8 +62,8 @@ public class MemberServiceService {
             String configXml = this.updateConfigXmlFile(configPath, newServiceDTO.getGithubUrl(), newServiceDTO.getEnv(), serviceName);
 
             // rest API 로 jenkins job 생성
-            client.api().jobsApi().create(null, serviceName, configXml);
-//            client.api().jobsApi().buildWithParameters(null, serviceName, newServiceDTO.getEnv());
+            RequestStatus a = client.api().jobsApi().create(null, serviceName, configXml);
+            client.api().jobsApi().buildWithParameters(null, serviceName, newServiceDTO.getEnv());
             client.close();
         }
         catch (Exception ex){
@@ -122,7 +120,7 @@ public class MemberServiceService {
                     "docker push 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com/" + serviceName + ":latest";
             elementToModify.setTextContent(text);
 
-            elementToModify = (Element)document.getElementsByTagName("execCommand").item(0);
+            elementToModify = (Element)document.getElementsByTagName("command").item(2);;
             text = "sh /941/secret.sh " + serviceName + "\n" +
                     "sh /941/yaml_generator.sh " + serviceName + " " + serviceName + " " + serviceName + ".yaml 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com/" + serviceName + ":latest 30298 80 VAR1=value1 VAR2=value2 kubectl apply -f /941/" + serviceName + ".yaml";
             elementToModify.setTextContent(text);
@@ -139,6 +137,28 @@ public class MemberServiceService {
         catch(Exception ex) {
             throw ex;
         }
+    }
+
+    @Transactional
+    public boolean createMemberService(NewServiceDTO newServiceDTO, String memberProviderId){
+        try{
+            Member member = memberRepository.findMemberByMemberProviderId(memberProviderId);
+            MemberAct memberAct = MemberAct.builder()
+                    .version("1")
+                    .sampleDate(new Date())
+                    .actType(ActType.CREATE)
+                    .build();
+
+            MemberService memberService = MemberService.createMemberService(newServiceDTO, member, memberAct);
+
+            serviceRepository.save(memberService);
+        }
+        catch (Exception ex){
+            System.out.println(ex);
+            return false;
+        }
+
+        return true;
     }
 
     public String checkServiceBuild(String jobName){

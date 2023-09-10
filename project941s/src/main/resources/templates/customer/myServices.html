@@ -40,7 +40,7 @@
             <td><a href="#" class="link-dark" th:text="${userService.name}">941_second</a></td>
             <td>
               <img th:if="${#strings.equals(userService.serviceStatus, 'SUCCESS')}" src="/images/GoodStatus.png" alt="Status">
-              <img th:if="${#strings.equals(userService.serviceStatus, 'FAIL')}" src="/images/FailStatus.png" alt="Status">
+              <img th:if="${#strings.equals(userService.serviceStatus, 'FAILURE')}" src="/images/FailStatus.png" alt="Status">
             </td>
             <td th:text="${userService.version}">v0.0.1</td>
             <td><a href="#" class="link-dark" th:text="${userService.githubUrl}">https://github.com/~</a></td>

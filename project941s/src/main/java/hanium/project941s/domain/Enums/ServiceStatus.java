@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum ServiceStatus {
 
     SUCCESS("SUCCESS", "성공"),
-    FAIL("FAIL", "실패");
+    FAILURE("FAILURE", "실패");
 
     private final String key;
     private final String title;

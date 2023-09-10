@@ -45,7 +45,11 @@ public class NewServiceController {
 
         // Job 생성
         String memberProviderId = principal.getMember().getMemberProviderId();
-        if (memberServiceService.createService(formDto, memberProviderId) == false){
+        if (memberServiceService.createJobToJenkins(formDto, memberProviderId) == false){
+            return "customer/deployFail";
+        }
+        // DB 추가
+        if (memberServiceService.createMemberService(formDto, memberProviderId) == false){
             return "customer/deployFail";
         }
 

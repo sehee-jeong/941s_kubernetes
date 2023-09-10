@@ -11,4 +11,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     public Member getOne(Long id);
     public List<Member> findByMemberProviderId(String MemberProviderId);
+
+    public Member findMemberByMemberProviderId(String MemberProviderId);
 }

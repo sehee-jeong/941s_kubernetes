@@ -1,6 +1,7 @@
 package hanium.project941s.domain;
 
 import hanium.project941s.domain.Enums.ServiceStatus;
+import hanium.project941s.dto.NewServiceDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,7 +28,7 @@ public class MemberService {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ServiceStatus serviceStatus; // Success, Fail 타입
+    private ServiceStatus serviceStatus; // Success, FAILURE 타입
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -36,11 +37,42 @@ public class MemberService {
     @OneToMany(mappedBy = "memberService", cascade = CascadeType.ALL)
     private List<ServiceEnv> serviceEnvs = new ArrayList<>();
 
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    private List<MemberAct> memberActs = new ArrayList<>();
+
     @Builder
-    public MemberService(String name, String version, String githubUrl, Date date) {
+    public MemberService(String name, String githubUrl, Date date, ServiceStatus serviceStatus, String version) {
         this.name = name;
-        this.version = version;
         this.githubUrl = githubUrl;
         this.date = date;
+        this.serviceStatus = serviceStatus;
+        this.version = version;
+    }
+
+    //==연관관계 메서드==//
+    public void setMember(Member member, MemberAct act) {
+        this.member = member;
+        member.getMemberServices().add(this);
+    }
+    public void addAct(MemberAct act) {
+        this.memberActs.add(act);
+        act.setService(this);
+    }
+
+    //==생성 메서드==//
+    public static MemberService createMemberService(NewServiceDTO newServiceDTO, Member member, MemberAct memberAct){
+        MemberService memberService = MemberService.builder()
+                .name(newServiceDTO.getServiceName())
+                .githubUrl(newServiceDTO.getGithubUrl())
+                .date(new Date())
+                .serviceStatus(ServiceStatus.FAILURE)
+                .version(memberAct.getVersion())
+                .build();
+
+        member.addAct(memberAct);
+        memberService.setMember(member, memberAct);
+        memberService.addAct(memberAct);
+
+        return memberService;
     }
 }
