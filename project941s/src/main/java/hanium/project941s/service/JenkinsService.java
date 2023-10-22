@@ -1,6 +1,7 @@
 package hanium.project941s.service;
 
 import com.cdancy.jenkins.rest.JenkinsClient;
+import com.cdancy.jenkins.rest.domain.common.IntegerResponse;
 import com.cdancy.jenkins.rest.domain.common.RequestStatus;
 import com.cdancy.jenkins.rest.domain.job.BuildInfo;
 import com.cdancy.jenkins.rest.domain.job.JobInfo;
@@ -27,9 +28,7 @@ import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +37,7 @@ public class JenkinsService {
     private String conNameKey = "k8s_jenkins165:111771fcf88cc2f8afaa25ff24b51a313c";
 
     public boolean createJobToJenkins(NewServiceDTO newServiceDTO, String memberProviderId){
+        memberProviderId = memberProviderId.replaceAll("_", "-");
         String serviceName = memberProviderId + "-" + newServiceDTO.getServiceName();
 
         JenkinsClient client = JenkinsClient.builder()
@@ -107,6 +107,7 @@ public class JenkinsService {
             // shell script에 ServiceName 추가하기
             elementToModify = (Element)document.getElementsByTagName("command").item(1);
             String text = "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com \n" +
+                    "sh /941/push-repo.sh " + serviceName + " \n" +
                     "docker build -t " + serviceName + " . \n" +
                     "docker tag " + serviceName + ":latest 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com/" + serviceName + ":latest \n" +
                     "docker push 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com/" + serviceName + ":latest";
@@ -114,7 +115,8 @@ public class JenkinsService {
 
             elementToModify = (Element)document.getElementsByTagName("command").item(2);;
             text = "sh /941/secret.sh " + serviceName + "\n" +
-                    "sh /941/yaml_generator.sh " + serviceName + " " + serviceName + " " + serviceName + ".yaml 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com/" + serviceName + ":latest " + outterPort + " " + innerPort + " VAR1=value1 VAR2=value2 kubectl apply -f /941/" + serviceName + ".yaml";
+                    "/941/yaml_generator.sh " + serviceName + " " + serviceName + " /941/" + serviceName + ".yaml 600359243171.dkr.ecr.ap-northeast-2.amazonaws.com/" + serviceName + ":latest " + outterPort + " " + innerPort + " VAR1=value1 VAR2=value2 \n" +
+                    "kubectl apply -f /941/" + serviceName + ".yaml";
             elementToModify.setTextContent(text);
 
 
@@ -234,5 +236,27 @@ public class JenkinsService {
         }
 
         return result;
+    }
+
+    public boolean deleteToJenkins(String serviceName){
+        JenkinsClient client = JenkinsClient.builder()
+                .endPoint(conAddr) // Optional.
+                .credentials(conNameKey) // Optional.
+                .build();
+
+        HashMap<String, List<String>> params = new HashMap<String, List<String>>();
+        params.put("nameSpace", new ArrayList<String>(Arrays.asList(serviceName)));
+
+        try {
+            IntegerResponse result = client.api().jobsApi().buildWithParameters(null, "deleteJob", params);
+            client.api().jobsApi().delete(null, serviceName);
+            client.close();
+        }
+        catch (Exception ex){
+            System.out.println(ex.getMessage());
+            return false;
+        }
+
+        return true;
     }
 }

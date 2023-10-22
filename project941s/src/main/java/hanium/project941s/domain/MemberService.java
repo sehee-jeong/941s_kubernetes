@@ -69,7 +69,7 @@ public class MemberService {
                 .githubUrl(newServiceDTO.getGithubUrl())
                 .url(EksUrl + newServiceDTO.getOutterPort())
                 .date(new Date())
-                .serviceStatus(ServiceStatus.FAILURE)
+                .serviceStatus(ServiceStatus.SUCCESS)
                 .version(memberAct.getVersion())
                 .port(newServiceDTO.getOutterPort())
                 .build();

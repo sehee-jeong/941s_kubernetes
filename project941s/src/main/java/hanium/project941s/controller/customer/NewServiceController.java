@@ -50,9 +50,9 @@ public class NewServiceController {
 
         // Job 생성
         String memberProviderId = principal.getMember().getMemberProviderId();
-//        if (jenkinsService.createJobToJenkins(formDto, memberProviderId) == false){
-//            return "customer/deployFail";
-//        }
+        if (jenkinsService.createJobToJenkins(formDto, memberProviderId) == false){
+            return "customer/deployFail";
+        }
         // DB 추가
         if (memberServiceService.createMemberService(formDto, memberProviderId) == false){
             return "customer/deployFail";
@@ -69,7 +69,8 @@ public class NewServiceController {
                        Model model){
         model.addAttribute("serviceName", serviceName);
 
-        String jenkinsSerivceName = principal.getMember().getMemberProviderId() + "-" + serviceName;
+        String customer = principal.getMember().getMemberProviderId().replaceAll("_", "-");
+        String jenkinsSerivceName = customer + "-" + serviceName;
         String buildStatus = jenkinsService.checkServiceBuild(jenkinsSerivceName);
         model.addAttribute("buildStatus", buildStatus);
 

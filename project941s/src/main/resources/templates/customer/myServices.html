@@ -28,6 +28,7 @@
           <th>상태</th>
           <th>버전</th>
           <th>Github 주소</th>
+          <th>서비스 주소</th>
           <th>최종 수정일</th>
           <th>control</th>
         </thead>
@@ -37,13 +38,14 @@
           <tbody>
             <tr th:each="userService : ${userServices}">
               <td><input class="form-check-input" type="checkbox" name="_selected_" th:value="${userService.id}"></td>
-              <td><a th:href="${userService.url}" class="link-dark" th:text="${userService.name}">941_second</a></td>
+              <td><a th:href="|${userService.url}/user/signup|" class="link-dark" th:text="${userService.name}">941_second</a></td>
               <td>
                 <img th:if="${#strings.equals(userService.serviceStatus, 'SUCCESS')}" src="/images/GoodStatus.png" alt="Status">
                 <img th:if="${#strings.equals(userService.serviceStatus, 'FAILURE')}" src="/images/FailStatus.png" alt="Status">
               </td>
               <td th:text="${userService.version}">v0.0.1</td>
               <td><a th:href="${userService.githubUrl}" class="link-dark" th:text="${userService.githubUrl}">https://github.com/~</a></td>
+              <td><a th:href="|${userService.url}/user/signup|" class="link-dark" th:text="|${userService.url}/user/signup|">https://github.com/~</a></td>
               <td th:text="${userService.date}">2023.03.21</td>
               <td>
                 <a href="/detail">

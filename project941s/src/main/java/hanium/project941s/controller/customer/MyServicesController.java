@@ -1,11 +1,15 @@
 package hanium.project941s.controller.customer;
 
 import hanium.project941s.domain.MemberService;
+import hanium.project941s.dto.PrincipalDetails;
+import hanium.project941s.repository.MemberRepository;
 import hanium.project941s.repository.ServiceRepository;
+import hanium.project941s.service.JenkinsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -20,11 +24,17 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MyServicesController {
     private final ServiceRepository serviceRepository;
+    private final MemberRepository memberRepository;
+    private final JenkinsService jenkinsService;
 
     @GetMapping("/customer/myServices")
-    public String MyServices(Model model, @PageableDefault(size = 10) Pageable pageable){
+    public String MyServices(Model model,
+                             @PageableDefault(size = 10) Pageable pageable,
+                             @AuthenticationPrincipal PrincipalDetails principal){
 
-        Page<MemberService> memberServices = serviceRepository.findAll(pageable);
+        String memberProviderId = principal.getMember().getMemberProviderId();
+        Long id = memberRepository.findMemberByMemberProviderId(memberProviderId).getId();
+        Page<MemberService> memberServices = serviceRepository.findByMember_Id(id, pageable);
 
 //        int startPage = Math.max(1, userServices.getPageable().getPageNumber() - 4);
 //        int minEndPage = Math.max(1, userServices.getTotalPages());
@@ -44,9 +54,17 @@ public class MyServicesController {
 
     @Transactional
     @PostMapping("/customer/deleteService")
-    public String deleteService(@RequestParam("_selected_") String[] deleteServices){
+    public String deleteService(@RequestParam("_selected_") String[] deleteServices,
+                                @AuthenticationPrincipal PrincipalDetails principal){
         for (String str : deleteServices){
-            serviceRepository.deleteById(Long.parseLong(str));
+            MemberService memberService = serviceRepository.getOne(Long.parseLong(str));
+
+            // pod, job 삭제
+            String serviceName = principal.getMember().getMemberProviderId().replaceAll("_", "-") + "-" + memberService.getName();
+            jenkinsService.deleteToJenkins(serviceName);
+
+            // DB 삭제
+            serviceRepository.delete(memberService);
         }
         return "redirect:/customer/myServices";
     }

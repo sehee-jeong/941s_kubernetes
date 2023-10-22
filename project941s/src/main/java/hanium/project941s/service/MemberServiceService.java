@@ -45,20 +45,20 @@ public class MemberServiceService {
 
     public int getUniquePort(){
         List<MemberService> memberServices = serviceRepository.findAllByOrderByPortAsc();
-        int result = 1024;
+        int result = 32000;
 
         if (memberServices.size() == 0){
             return result;
         }
 
         for (int i = 0; i < memberServices.size(); i++){
-            result += i;
+            int tem_result = result + i;
 
-            if (memberServices.get(i).getPort() != result) {
-                return result;
+            if (memberServices.get(i).getPort() != tem_result) {
+                return tem_result;
             }
         }
-        result++;
+        result += memberServices.size();
         return result;
     }
 }
